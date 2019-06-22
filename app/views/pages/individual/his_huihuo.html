@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title><%- title%></title>
+  <style media="screen">
+    /*
+     * Base structure
+     */
+
+    /* Move down content because we have a fixed navbar that is 50px tall */
+    body {
+      padding-top: 50px;
+    }
+
+
+    /*
+     * Global add-ons
+     */
+
+    .sub-header {
+      padding-bottom: 10px;
+      border-bottom: 1px solid #eee;
+    }
+
+    /*
+     * Top navigation
+     * Hide default border to remove 1px line.
+     */
+    .navbar-fixed-top {
+      border: 0;
+    }
+
+    /*
+     * Sidebar
+     */
+
+    /* Hide for mobile, show later */
+    .sidebar {
+      display: none;
+    }
+    @media (min-width: 768px) {
+      .sidebar {
+        position: fixed;
+        top: 51px;
+        bottom: 0;
+        left: 0;
+        z-index: 1000;
+        display: block;
+        padding: 20px;
+        overflow-x: hidden;
+        overflow-y: auto; /* Scrollable contents if viewport is shorter than content. */
+        background-color: #f5f5f5;
+        border-right: 1px solid #eee;
+      }
+    }
+
+    /* Sidebar navigation */
+    .nav-sidebar {
+      margin-right: -21px; /* 20px padding + 1px border */
+      margin-bottom: 20px;
+      margin-left: -20px;
+    }
+    .nav-sidebar > li > a {
+      padding-right: 20px;
+      padding-left: 20px;
+    }
+    .nav-sidebar > .active > a,
+    .nav-sidebar > .active > a:hover,
+    .nav-sidebar > .active > a:focus {
+      color: #fff;
+      background-color: #428bca;
+    }
+
+
+    /*
+     * Main content
+     */
+
+    .main {
+      padding: 20px;
+    }
+    @media (min-width: 768px) {
+      .main {
+        padding-right: 40px;
+        padding-left: 40px;
+      }
+    }
+    .main .page-header {
+      margin-top: 0;
+    }
+
+
+    /*
+     * Placeholder dashboard ideas
+     */
+
+    .placeholders {
+      margin-bottom: 30px;
+      text-align: center;
+    }
+    .placeholders h4 {
+      margin-bottom: 0;
+    }
+    .placeholder {
+      margin-bottom: 20px;
+    }
+    .placeholder img {
+      display: inline-block;
+      border-radius: 50%;
+    }
+
+  </style>
+</head>
+<body>
+<nav class="navbar navbar-inverse navbar-fixed-top">
+  <div class="container">
+    <div id="navbar" class="navbar-collapse collapse navbar-right">
+      <span class="navbar-brand">欢迎您:</span>
+      <span class="navbar-brand">|</span>
+      <a class="navbar-brand" href="/individual/main_hot">退出</a>
+    </div><!--/.navbar-collapse -->
+  </div>
+</nav>
+<h>请输入回火炉数据</h>
+<h2 class="sub-header">回火炉数据</h2>
+<div class="table-responsive">
+  <table border="1px" align="center">
+    <caption>当前添加数据</caption>
+    <thead>
+
+    <tr>
+      <th>时间</th>
+      <th>温度</th>
+      <th>湿度</th>
+      <th>压强</th>
+
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+      <td><%- time_show %></td>
+      <td><%- temperature %></td>
+      <td><%- humidity %></td>
+      <td><%- pressure %></td>
+    </tr>
+
+    </tbody>
+  </table>
+  <br/>
+  <!-- <table border="1px" class="table table-striped">
+      <tr>
+          <th>时间</th>
+          <th>温度</th>
+          <th>湿度</th>
+          <th>压强</th>
+          <th>班级名</th>
+          <th>操作</th>
+      </tr> -->
+  <!--视图里面包含一个Model属性，可以通过Action方法中的View方法来赋值-->
+  <!-- @foreach (Student stu in Model)
+  { -->
+  <!-- <tr>
+      <td>@stu.s_ID</td>
+      <td>@stu.s_Name</td>
+      <td>@stu.s_Sex</td>
+      <td>@stu.s_Age</td>
+      <td>@stu.Classes.c_Name</td>
+      <!-传参数-->
+  <!-- <td>@Html.ActionLink("修改", "Modify", new { id=@stu.s_ID})@Html.ActionLink("删除", "Delete", new { id=@stu.s_ID})@Html.ActionLink("增加", "Add")</td> -->
+
+  <!-- </tr>  -->
+  <!-- } -->
+  </table>
+  <center><table border="1px" style="border:dotted;border-color:#F06">
+    <caption>数据</caption>
+    <tr>
+      <!-- <th>编号</th> -->
+      <th>编号</th>
+      <th>时间</th>
+      <th>温度</th>
+      <th>湿度</th>
+      <th>压强</th>
+    </tr>
+
+    <% for(var i=0; i<result.length; i++){%>
+    <tr>
+      <td><%= result[i].id %></td>
+      <td><%= result[i].time.getFullYear() + '-' + (result[i].time.getMonth() + 1) + '-' + result[i].time.getDate() + ' ' + result[i].time.getHours() + ':' + result[i].time.getMinutes() + ':' + result[i].time.getSeconds() %></td>
+      <td><%= result[i].temperature %></td>
+      <td><%= result[i].humidity%></td>
+      <td><%= result[i].pressure %></td>
+    </tr>
+    <%}%>
+    <!-- <?php
+    $link=mysql_connect('localhost','root','123')or die("数据库连接失败");
+    //连接数据库
+    mysql_select_db('manage_platform',$link);//选择数据库
+    mysql_query("set names utf8");//设置编码格式
+
+    $q="select * from jiare";//设置查询指令
+    $result=mysql_query($q);//执行查询
+    while($row=mysql_fetch_assoc($result))//将result结果集中查询结果取出一条
+    {
+     echo"<tr><td>".$row["id"]."</td><td>".$row["time"]."</td><td>".$row["humidity"]."</td><td>".$row["pressure"]."</td><td>".$row["lastdate"]."</td><tr>";
+    }
+    ?> -->
+  </table>
+  </center>
+</div>
+</div>
+</div>
+</div>
+</body>
+</html>
